@@ -31,6 +31,7 @@ class LonelyChat extends Component {
     super(props);
     this.user1 = "Youssef";
     this.bot1 = "Josie";
+    this.bot2="Frederic";
     this.josieAnswers = ["1", "2", "3"];
     this.state = {
       conversation: [],
@@ -44,7 +45,8 @@ class LonelyChat extends Component {
     let message = this.state.currentMessage;
     this.setState({
       conversation: this.state.conversation.concat([
-        this.createConversationObject(this.user1, message)
+        this.createConversationObject(this.user1, message),
+        this.createConversationObject(this.bot2, createRandomSentence())
       ]),
       currentMessage: ""
     });
@@ -54,7 +56,7 @@ class LonelyChat extends Component {
           this.createConversationObject(this.bot1, createRandomSentence())
         )
       });
-    }, Math.floor(Math.random() * 5000));
+    }, Math.floor(Math.random() * 2000));
   }
   onChangeMessageText(event) {
     this.setState({
