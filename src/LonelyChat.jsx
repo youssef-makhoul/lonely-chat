@@ -29,23 +29,27 @@ class ConversationForm extends Component {
 class LonelyChat extends Component {
   constructor(props) {
     super(props);
-    this.user1 = "Youssef";
+
     this.bot1 = "Josie";
-    this.bot2="Frederic";
+    this.bot2 = "Frederic";
     this.josieAnswers = ["1", "2", "3"];
     this.state = {
+      username: "",
       conversation: [],
-      currentMessage: ""
+      currentMessage: "",
+      showUserNameForm: true
     };
     this.onSubmitChat = this.onSubmitChat.bind(this);
     this.onChangeMessageText = this.onChangeMessageText.bind(this);
+    this.onChangeUserNameBox = this.onChangeUserNameBox.bind(this);
+    this.onSubmitUserName = this.onSubmitUserName.bind(this);
   }
   onSubmitChat(event) {
     event.preventDefault();
     let message = this.state.currentMessage;
     this.setState({
       conversation: this.state.conversation.concat([
-        this.createConversationObject(this.user1, message),
+        this.createConversationObject(this.state.username, message),
         this.createConversationObject(this.bot2, createRandomSentence())
       ]),
       currentMessage: ""
@@ -66,7 +70,29 @@ class LonelyChat extends Component {
   createConversationObject(name, message) {
     return { name: name, message: message };
   }
+  onChangeUserNameBox(event) {
+    this.setState({ username: event.target.value });
+  }
+  onSubmitUserName(event) {
+    event.preventDefault();
+    this.setState({showUserNameForm:false});
+  }
   render() {
+    if (this.state.showUserNameForm) {
+      return (
+        <div>
+          <form onSubmit={this.onSubmitUserName} className="ChatForm">
+          <span>userName:</span>
+            <input
+              type="text"
+              value={this.state.usernameBox}
+              onChange={this.onChangeUserNameBox}
+            />
+            <input type="submit" value="SignIn"/>
+          </form>
+        </div>
+      );
+    }
     return (
       <div>
         <ConversationForm Conversation={this.state.conversation} />
