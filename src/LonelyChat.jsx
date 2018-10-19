@@ -30,7 +30,7 @@ class LonelyChat extends Component {
   constructor(props) {
     super(props);
     this.user1 = "Youssef";
-    this.bot1 = "Jose";
+    this.bot1 = "Josie";
     this.josieAnswers = ["1", "2", "3"];
     this.state = {
       conversation: [],
@@ -44,11 +44,17 @@ class LonelyChat extends Component {
     let message = this.state.currentMessage;
     this.setState({
       conversation: this.state.conversation.concat([
-        this.createConversationObject(this.user1, message),
-        this.createConversationObject(this.bot1, createRandomSentence())
+        this.createConversationObject(this.user1, message)
       ]),
       currentMessage: ""
     });
+    setTimeout(() => {
+      this.setState({
+        conversation: this.state.conversation.concat(
+          this.createConversationObject(this.bot1, createRandomSentence())
+        )
+      });
+    }, Math.floor(Math.random() * 5000));
   }
   onChangeMessageText(event) {
     this.setState({
