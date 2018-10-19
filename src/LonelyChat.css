@@ -1,0 +1,17 @@
+.PersonName {
+    font-weight: bold
+}
+
+.ConversationElement{
+    list-style: none;
+}
+
+.ConversationFormComp{
+position: fixed
+}
+
+.ChatForm{
+    position: absolute;
+    bottom: 20%;
+    left: 0;
+}
