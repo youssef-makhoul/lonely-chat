@@ -51,7 +51,8 @@ class LonelyChat extends Component {
           this.state.currentMessage
         )
       ),
-      currentUser: userName
+      currentUser: userName,
+      currentMessage: ''
     });
   }
   onChangeMessageText(event) {
