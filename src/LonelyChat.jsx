@@ -29,15 +29,13 @@ class ConversationForm extends Component {
 class LonelyChat extends Component {
   constructor(props) {
     super(props);
-
-    this.bot1 = "Josie";
-    this.bot2 = "Frederic";
+    this.bot = this.props.Bot;
     this.josieAnswers = ["1", "2", "3"];
     this.state = {
       username: "",
       conversation: [],
       currentMessage: "",
-      showUserNameForm: true
+      showUserNameForm: true,
     };
     this.onSubmitChat = this.onSubmitChat.bind(this);
     this.onChangeMessageText = this.onChangeMessageText.bind(this);
@@ -49,18 +47,17 @@ class LonelyChat extends Component {
     let message = this.state.currentMessage;
     this.setState({
       conversation: this.state.conversation.concat([
-        this.createConversationObject(this.state.username, message),
-        this.createConversationObject(this.bot2, createRandomSentence())
+        this.createConversationObject(this.state.username, message)
       ]),
       currentMessage: ""
     });
     setTimeout(() => {
       this.setState({
         conversation: this.state.conversation.concat(
-          this.createConversationObject(this.bot1, createRandomSentence())
+          this.createConversationObject(this.bot, createRandomSentence())
         )
       });
-    }, Math.floor(Math.random() * 2000));
+    }, parseInt(this.props.ResponseTime)*1000);
   }
   onChangeMessageText(event) {
     this.setState({
@@ -80,7 +77,7 @@ class LonelyChat extends Component {
   render() {
     if (this.state.showUserNameForm) {
       return (
-        <div>
+        <div className="ChatForm">
           <form onSubmit={this.onSubmitUserName} className="ChatForm">
           <span>userName:</span>
             <input
@@ -94,9 +91,10 @@ class LonelyChat extends Component {
       );
     }
     return (
-      <div>
+      <div className="ChatForm">
+      <h1>Talk With {this.bot}</h1>
         <ConversationForm Conversation={this.state.conversation} />
-        <form onSubmit={this.onSubmitChat} className="ChatForm">
+        <form onSubmit={this.onSubmitChat} >
           <input
             type="text"
             value={this.state.currentMessage}
